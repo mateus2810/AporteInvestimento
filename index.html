@@ -1,11 +1,49 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Titulo</title>
+    <title>Calculadora de Investimentos</title>
 </head>
 <body>
+    <h1>Calculadora de Investimentos</h1>
+    <form id="investmentForm">
+        <label for="months">Quantidade de Meses:</label>
+        <input type="number" id="months" name="months" required>
+        <br>
+        <label for="initialAmount">Valor Aportado:</label>
+        <input type="number" id="initialAmount" name="initialAmount" required>
+        <br>
+        <label for="profitPercentage">Porcentagem de Lucro por Mês:</label>
+        <input type="number" id="profitPercentage" name="profitPercentage" required>
+        <br>
+        <input type="submit" value="Calcular">
+    </form>
 
-	<h1> teste rapido</h1>
+    <div id="result"></div>
 
+    <script>
+        const form = document.getElementById("investmentForm");
+        const resultDiv = document.getElementById("result");
+
+        form.addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            const months = parseFloat(document.getElementById("months").value);
+            const initialAmount = parseFloat(document.getElementById("initialAmount").value);
+            const profitPercentage = parseFloat(document.getElementById("profitPercentage").value);
+
+            if (isNaN(months) || isNaN(initialAmount) || isNaN(profitPercentage)) {
+                alert("Por favor, preencha todos os campos com valores válidos.");
+            } else {
+                let totalAmount = initialAmount;
+                for (let i = 1; i <= months; i++) {
+                    const profit = (totalAmount * profitPercentage) / 100;
+                    totalAmount += profit;
+                }
+
+                resultDiv.innerHTML = "Após " + months + " meses, o montante total será de R$" + totalAmount.toFixed(2);
+                form.reset();
+            }
+        });
+    </script>
 </body>
 </html>
