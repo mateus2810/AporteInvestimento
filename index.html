@@ -73,7 +73,7 @@
 
             if (!isNaN(aporteMensal) && !isNaN(quantidadeMeses) && !isNaN(porcentagemMes)) {
                 const montanteTotal = calcularMontanteTotal(aporteMensal, quantidadeMeses, porcentagemMes);
-                resultElement.textContent = `Montante total após ${quantidadeMeses} meses: R$ ${montanteTotal.toFixed(2)}`;
+                resultElement.textContent = `Montante total após ${quantidadeMeses} meses: R$ ${montanteTotal.toLocaleString('pt-BR')}`;
             } else {
                 resultElement.textContent = 'Informe valores válidos para os campos.';
             }
