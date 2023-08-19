@@ -1,49 +1,71 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Calculadora de Investimentos</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Investimento</title>
+    <!-- Incluindo os arquivos do Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
-    <h1>Calculadora de Investimentos</h1>
-    <form id="investmentForm">
-        <label for="months">Quantidade de Meses:</label>
-        <input type="number" id="months" name="months" required>
-        <br>
-        <label for="initialAmount">Valor Aportado:</label>
-        <input type="number" id="initialAmount" name="initialAmount" required>
-        <br>
-        <label for="profitPercentage">Porcentagem de Lucro por Mês:</label>
-        <input type="number" id="profitPercentage" name="profitPercentage" required>
-        <br>
-        <input type="submit" value="Calcular">
-    </form>
+    <div class="container mt-5">
+        <h2>Calculadora de Investimento</h2>
+        <form id="investmentCalculatorForm">
+            <div class="form-group">
+                <label for="aporteMensal">Valor de Aporte Mensal:</label>
+                <input type="number" class="form-control" id="aporteMensal" placeholder="Informe o valor de aporte mensal">
+            </div>
+            <div class="form-group">
+                <label for="quantidadeMeses">Quantidade de Meses:</label>
+                <input type="number" class="form-control" id="quantidadeMeses" placeholder="Informe a quantidade de meses">
+            </div>
+            <div class="form-group">
+                <label for="porcentagemMes">Porcentagem Sobre o Montante do Mês:</label>
+                <input type="number" class="form-control" id="porcentagemMes" placeholder="Informe a porcentagem sobre o montante do mês">
+            </div>
+            <button type="button" class="btn btn-primary" id="calculateButton">Calcular</button>
+        </form>
+        <div class="mt-3">
+            <p id="result"></p>
+        </div>
+    </div>
 
-    <div id="result"></div>
+    <!-- Incluindo o arquivo do Bootstrap JavaScript -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
     <script>
-        const form = document.getElementById("investmentForm");
-        const resultDiv = document.getElementById("result");
+        // Capturando elementos do DOM
+        const aporteMensalInput = document.getElementById('aporteMensal');
+        const quantidadeMesesInput = document.getElementById('quantidadeMeses');
+        const porcentagemMesInput = document.getElementById('porcentagemMes');
+        const calculateButton = document.getElementById('calculateButton');
+        const resultElement = document.getElementById('result');
 
-        form.addEventListener("submit", function(event) {
-            event.preventDefault();
+        // Função para calcular e exibir o resultado
+        calculateButton.addEventListener('click', () => {
+            const aporteMensal = parseFloat(aporteMensalInput.value);
+            const quantidadeMeses = parseInt(quantidadeMesesInput.value);
+            const porcentagemMes = parseFloat(porcentagemMesInput.value);
 
-            const months = parseFloat(document.getElementById("months").value);
-            const initialAmount = parseFloat(document.getElementById("initialAmount").value);
-            const profitPercentage = parseFloat(document.getElementById("profitPercentage").value);
-
-            if (isNaN(months) || isNaN(initialAmount) || isNaN(profitPercentage)) {
-                alert("Por favor, preencha todos os campos com valores válidos.");
+            if (!isNaN(aporteMensal) && !isNaN(quantidadeMeses) && !isNaN(porcentagemMes)) {
+                const montanteTotal = calcularMontanteTotal(aporteMensal, quantidadeMeses, porcentagemMes);
+                resultElement.textContent = `Montante total após ${quantidadeMeses} meses: R$ ${montanteTotal.toFixed(2)}`;
             } else {
-                let totalAmount = initialAmount;
-                for (let i = 1; i <= months; i++) {
-                    const profit = (totalAmount * profitPercentage) / 100;
-                    totalAmount += profit;
-                }
-
-                resultDiv.innerHTML = "Após " + months + " meses, o montante total será de R$" + totalAmount.toFixed(2);
-                form.reset();
+                resultElement.textContent = 'Informe valores válidos para os campos.';
             }
         });
+
+        // Função para calcular o montante total
+        function calcularMontanteTotal(aporteMensal, quantidadeMeses, porcentagemMes) {
+            let montanteTotal = 0;
+            for (let i = 0; i < quantidadeMeses; i++) {
+                montanteTotal += aporteMensal;
+                montanteTotal *= (1 + (porcentagemMes / 100));
+            }
+            return montanteTotal;
+        }
     </script>
 </body>
 </html>
