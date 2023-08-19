@@ -9,18 +9,40 @@
 </head>
 <body>
     <div class="container mt-5">
-        <h2>Calculadora de Investimento</h2>
+    	<h2>Calculadora de Investimento</h2>
+
+    	<p><u>Descrição</u>: Esse sistema tem por objetivo colocar valor do aporte mensal e calcular quantos meses vc deseja fazer seu investimento. 
+    		Lembrando que o calculo é sempre feito sobre o valor já incluso o percentual do mês passado.
+
+    	</p>
+
+    	<p><u>Ex: Aporte de 100 reais em 2 meses: 		</u>
+    		<br>
+			Primeiro Mês(100+1 = 101)
+    		<br>
+    		Segundo Mês(101+100 = 201 + 2.01 = 203.01)
+
+    		<p>Nesse exemplo o aporte de 100 reais no primeiro mês com uma porcentagem de 1% vc teria um valor de 101 reais.
+    			<br>
+    			No segundo mês 101 + 100, resultando 201 + 1% sobre o valor de 201, ou seja, 2.01, totalizando no final 203.01. 
+    			<br>   
+    			Faça o teste ;)
+    		</p>
+    	</p>
+
+
+
         <form id="investmentCalculatorForm">
             <div class="form-group">
-                <label for="aporteMensal">Valor de Aporte Mensal:</label>
+                <b><label for="aporteMensal">1. Valor de Aporte Mensal:</label></b>
                 <input type="number" class="form-control" id="aporteMensal" placeholder="Informe o valor de aporte mensal">
             </div>
             <div class="form-group">
-                <label for="quantidadeMeses">Quantidade de Meses:</label>
+                <b><label for="quantidadeMeses">2. Quantidade de Meses:</label></b>
                 <input type="number" class="form-control" id="quantidadeMeses" placeholder="Informe a quantidade de meses">
             </div>
             <div class="form-group">
-                <label for="porcentagemMes">Porcentagem Sobre o Montante do Mês:</label>
+                <b><label for="porcentagemMes">3. Porcentagem Sobre o Montante do Mês:</label></b>
                 <input type="number" class="form-control" id="porcentagemMes" placeholder="Informe a porcentagem sobre o montante do mês">
             </div>
             <button type="button" class="btn btn-primary" id="calculateButton">Calcular</button>
