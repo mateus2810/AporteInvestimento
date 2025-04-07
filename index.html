@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,44 +9,46 @@
 </head>
 <body>
     <div class="container mt-5">
-    	<h2>Calculadora de Investimento</h2>
+        <h2>Calculadora de Investimento</h2>
 
-    	<p><u>Descrição</u>: Esse sistema tem por objetivo colocar valor do aporte mensal e calcular quantos meses vc deseja fazer seu investimento. 
-    		Lembrando que o calculo é sempre feito sobre o valor já incluso o percentual do mês passado.
+        <p><u>Descrição</u>: Esse sistema tem por objetivo colocar valor do aporte mensal e calcular quantos meses vc deseja fazer seu investimento. 
+            Lembrando que o calculo é sempre feito sobre o valor já incluso o percentual do mês passado.
+        </p>
 
-    	</p>
+        <p><u>Ex: Aporte de 100 reais em 2 meses: </u>
+            <br>
+            Primeiro Mês(100+1 = 101)
+            <br>
+            Segundo Mês(101+100 = 201 + 2.01 = 203.01)
+        </p>
 
-    	<p><u>Ex: Aporte de 100 reais em 2 meses: 		</u>
-    		<br>
-			Primeiro Mês(100+1 = 101)
-    		<br>
-    		Segundo Mês(101+100 = 201 + 2.01 = 203.01)
-
-    		<p>Nesse exemplo o aporte de 100 reais no primeiro mês com uma porcentagem de 1% vc teria um valor de 101 reais.
-    			<br>
-    			No segundo mês 101 + 100, resultando 201 + 1% sobre o valor de 201, ou seja, 2.01, totalizando no final 203.01. 
-    			<br>   
-    			Faça o teste ;)
-    		</p>
-    	</p>
-
-
+        <p>Nesse exemplo o aporte de 100 reais no primeiro mês com uma porcentagem de 1% vc teria um valor de 101 reais.
+            <br>
+            No segundo mês 101 + 100, resultando 201 + 1% sobre o valor de 201, ou seja, 2.01, totalizando no final 203.01. 
+            <br>   
+            Faça o teste ;)
+        </p>
 
         <form id="investmentCalculatorForm">
             <div class="form-group">
-                <b><label for="aporteMensal">1. Valor de Aporte Mensal:</label></b>
+                <b><label for="valorInicial">1. Valor Inicial (opcional):</label></b>
+                <input type="number" class="form-control" id="valorInicial" placeholder="Informe quanto você já tem investido">
+            </div>
+            <div class="form-group">
+                <b><label for="aporteMensal">2. Valor de Aporte Mensal:</label></b>
                 <input type="number" class="form-control" id="aporteMensal" placeholder="Informe o valor de aporte mensal">
             </div>
             <div class="form-group">
-                <b><label for="quantidadeMeses">2. Quantidade de Meses:</label></b>
+                <b><label for="quantidadeMeses">3. Quantidade de Meses:</label></b>
                 <input type="number" class="form-control" id="quantidadeMeses" placeholder="Informe a quantidade de meses">
             </div>
             <div class="form-group">
-                <b><label for="porcentagemMes">3. Porcentagem Sobre o Montante do Mês:</label></b>
+                <b><label for="porcentagemMes">4. Porcentagem Sobre o Montante do Mês:</label></b>
                 <input type="number" class="form-control" id="porcentagemMes" placeholder="Informe a porcentagem sobre o montante do mês">
             </div>
             <button type="button" class="btn btn-primary" id="calculateButton">Calcular</button>
         </form>
+
         <div class="mt-3">
             <p id="result"></p>
         </div>
@@ -58,30 +60,29 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
     <script>
-        // Capturando elementos do DOM
+        const valorInicialInput = document.getElementById('valorInicial');
         const aporteMensalInput = document.getElementById('aporteMensal');
         const quantidadeMesesInput = document.getElementById('quantidadeMeses');
         const porcentagemMesInput = document.getElementById('porcentagemMes');
         const calculateButton = document.getElementById('calculateButton');
         const resultElement = document.getElementById('result');
 
-        // Função para calcular e exibir o resultado
         calculateButton.addEventListener('click', () => {
+            const valorInicial = parseFloat(valorInicialInput.value) || 0;
             const aporteMensal = parseFloat(aporteMensalInput.value);
             const quantidadeMeses = parseInt(quantidadeMesesInput.value);
             const porcentagemMes = parseFloat(porcentagemMesInput.value);
 
             if (!isNaN(aporteMensal) && !isNaN(quantidadeMeses) && !isNaN(porcentagemMes)) {
-                const montanteTotal = calcularMontanteTotal(aporteMensal, quantidadeMeses, porcentagemMes);
-                resultElement.textContent = `Montante total após ${quantidadeMeses} meses: R$ ${montanteTotal.toLocaleString('pt-BR')}`;
+                const montanteTotal = calcularMontanteTotal(valorInicial, aporteMensal, quantidadeMeses, porcentagemMes);
+                resultElement.textContent = `Montante total após ${quantidadeMeses} meses: R$ ${montanteTotal.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
             } else {
                 resultElement.textContent = 'Informe valores válidos para os campos.';
             }
         });
 
-        // Função para calcular o montante total
-        function calcularMontanteTotal(aporteMensal, quantidadeMeses, porcentagemMes) {
-            let montanteTotal = 0;
+        function calcularMontanteTotal(valorInicial, aporteMensal, quantidadeMeses, porcentagemMes) {
+            let montanteTotal = valorInicial;
             for (let i = 0; i < quantidadeMeses; i++) {
                 montanteTotal += aporteMensal;
                 montanteTotal *= (1 + (porcentagemMes / 100));
